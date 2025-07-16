@@ -1,0 +1,98 @@
+.container {
+  position: relative;
+  width: 100%;
+  height: 45vh;
+  overflow: hidden;
+}
+
+/* Base styles for both layers */
+.image-layer {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background-size: cover;
+}
+.drag-line {
+  z-index: 5; /* Make sure it's above red and blue layers */
+}
+.drag-icon {
+  background: white;
+  border: 2px solid #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  user-select: none;
+  cursor: grab;
+  z-index: 10;
+}
+
+
+/* Red image on left */
+.red {
+  left: 0;
+  width: 100%;
+  background-image: url("https://wrogn.com/cdn/shop/files/WUTS1244S_6470d23f-1725-4690-9c5c-42555af49765.webp?v=1744697940");
+  z-index: 2;
+}
+
+.blue {
+  left: 0;
+  width: 100%;
+  background-image: url("https://wrogn.com/cdn/shop/files/WUTS1240S_b722463f-228f-47d3-9f13-a00d58946c7b.webp?v=1744697930");
+  z-index: 1;
+}
+
+/* White draggable line */
+.drag-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: white;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon */
+.drag-icon {
+  background: black;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 20px;
+  user-select: none;
+  cursor: grab;
+  touch-action: none;
+}
+
+@keyframes scrollLeft {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scrollRight {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.slider-track {
+  display: flex;
+  width: max-content;
+}
+
+.scroll-left {
+  animation: scrollLeft 20s linear infinite;
+}
+
+.scroll-right {
+  animation: scrollRight 20s linear infinite;
+}
