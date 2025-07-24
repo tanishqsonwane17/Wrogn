@@ -1,11 +1,64 @@
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+@font-face {
+  font-family: 'walkerLight';
+  src: url('../font//VarentGrotesk-ExtLtIta.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'walkerBold';
+  src: url('../font/VarentGrotesk-Bold.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
 .container {
   position: relative;
   width: 100%;
-  height: 45vh;
+  height: 45vh; 
   overflow: hidden;
 }
 
-/* Base styles for both layers */
+@media screen and (min-width: 768px) {
+  .container {
+    height: 80vh;
+  }
+}
+.slider-track {
+  display: flex;
+  animation: scroll 40s linear infinite;
+}
+
+.scroll-left {
+  animation-name: scroll-left;
+}
+
+.scroll-right {
+  animation-name: scroll-right;
+}
+
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
 .image-layer {
   position: absolute;
   top: 0;
@@ -13,7 +66,7 @@
   background-size: cover;
 }
 .drag-line {
-  z-index: 5; /* Make sure it's above red and blue layers */
+  z-index: 5; 
 }
 .drag-icon {
   background: white;
@@ -25,7 +78,6 @@
 }
 
 
-/* Red image on left */
 .red {
   left: 0;
   width: 100%;
@@ -40,7 +92,6 @@
   z-index: 1;
 }
 
-/* White draggable line */
 .drag-line {
   position: absolute;
   top: 0;
@@ -95,4 +146,49 @@
 
 .scroll-right {
   animation: scrollRight 20s linear infinite;
+}
+.tail-path-prev,
+.tail-path-next {
+  transition: d 0.4s ease;
+}
+
+/* Left Arrow hover (prev) */
+.group:hover .tail-path-prev {
+  d: path("M7 0L16.4084 6.70978L7 13"); /* left me jyada bahar */
+}
+
+/* Right Arrow hover (next) */
+.group:hover .tail-path-next {
+  d: path("M29 0L19.5916 6.70978L29 13"); /* right me jyada bahar */
+}
+body{
+  overflow-x: hidden;
+}
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes zoomIn {
+  from {
+    transform: scale(0);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-slideFade {
+  animation: slideFade 0.6s ease forwards;
+}
+
+.animate-zoomIn {
+  animation: zoomIn 0.6s ease forwards;
 }

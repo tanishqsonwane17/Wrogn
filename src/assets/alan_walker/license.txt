@@ -1,0 +1,11 @@
+Model Information:
+* title:	Alan Walker
+* source:	https://sketchfab.com/3d-models/alan-walker-7858bbc3075844e598e63c5adbf6ca89
+* author:	Tremolo_1404_ (https://sketchfab.com/Tremolo_1404_)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Alan Walker" (https://sketchfab.com/3d-models/alan-walker-7858bbc3075844e598e63c5adbf6ca89) by Tremolo_1404_ (https://sketchfab.com/Tremolo_1404_) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

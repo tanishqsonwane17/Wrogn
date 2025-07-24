@@ -1,334 +1,317 @@
-import React from 'react'
-import { CiMenuBurger, CiSearch } from "react-icons/ci"
-import { BsBag } from "react-icons/bs"
-import WrognLogo from '../assets/images/logo.png'
-import '../App.css'
-import Drag from '../components/Drag'
-import ProductSlider from '../components/ProductSlider'
+import React, { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Lenis from '@studio-freight/lenis';
+import { IoBagOutline } from "react-icons/io5";
+import { useNavigate } from 'react-router-dom';
+import '../App.css';
+import { UpperSliderAssets } from '../data/UpperSlider';
+import { essentials } from '../data/Essential';
+import { PoloAssets } from '../data/Polo';
+import { WinterAssets } from '../data/Winter';
+import { specialPricesAssets } from '../data/SpecialAssets';
+import { LowerSliderAssets } from '../data/LowerSlider';
+import { MaskAssets } from '../data/Masks';
+import { NewArrivalsAssets } from '../data/NewArrivalData';
+import Aw1 from '../assets/images/Walker1.png';
+import Aw2 from '../assets/images/Walker2.png';
+import finalVideo from '../assets/videos/bgVideo.mp4';
+import Drag from '../components/Drag';
+import ProductSlider from '../components/ProductSlider';
+import BottomPanel from '../components/Menu';
+import Footer from '../components/Footer';
+import Nav from '../components/Nav';
+import walkerMask from '../assets/images/walkerMask1.png';
+import blue1 from '../assets/images/blue1.png';
+import MagnetButtons from '../components/MagnetButtons';
+import red1 from '../assets/images/red1.png'
+import red2 from '../assets/images/red2.png'
+gsap.registerPlugin(ScrollTrigger);
 
+export const ProductCard = ({ item, setCartCount, setCartItems, small  }) => {
+  const cardRef = useRef(null);
+  
+  const [selectedSize, setSelectedSize] = useState(() => {
+    return localStorage.getItem(`selectedSize-${item.id}`) || 'S';
+  });
+  const navigate = useNavigate();
+  const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  const unavailableSizes = ['XL', 'XXL'];
 
- export const ProductCard = ({ item }) => (
-  <div className="w-[45vw] min-w-[vw] rounded-lg border shadow-md">
-    <div className="h-[45vw] w-full">
-      {item.img && (
-        <img
-          className="h-full w-full object-cover rounded-t-lg"
-          src={item.img}
-          alt={item.name}
+useEffect(() => {
+  const element = cardRef.current;
+
+  const userId = localStorage.getItem("userId"); 
+
+  const anim = gsap.fromTo(
+    element,
+    { y: 100, opacity: 0 },
+    {
+      y:0,
+      opacity: 1,
+      duration: 0.2,
+      ease: 'back.out(1.7)',
+      scrollTrigger: {
+        trigger: element,
+        start: 'top 80%',
+        toggleActions: 'play none none none',
+      },
+    }
+  );
+  return () => {
+    anim.scrollTrigger && anim.scrollTrigger.kill();
+  };
+}, []);
+
+  return (
+<div
+  ref={cardRef}
+  onClick={() => navigate(`/product/${item.id}`)}
+  className={`card group rounded-lg border overflow-hidden border-gray-500 shadow-md cursor-pointer relative transition-all duration-300 ${
+    small ? "w-[150px] md:w-[230px]" : "w-[44.4vw] md:w-[50vw] lg:w-[28vw]"
+  }`}
+>
+<div className={`relative w-full flex justify-center items-center overflow-hidden ${
+  small ? "h-[180px]" : "md:h-[55vh] lg:h-[70vh]"
+}`}>
+  <img
+    className={`object-contain transition-transform duration-500 ease-in-out ${
+      small ? "h-[150px]" : "h-full md:group-hover:scale-110"
+    }`}
+    src={item.img}
+    alt={item.name}
+  />
+        <div className="absolute bottom-0 left-0 w-full translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-[#ffffffec] px-4 py-6 rounded-t-md z-20">
+          <h5 className="text-md font-bold">Size</h5>
+          <div className="flex gap-2 flex-wrap mt-2 overflow-hidden">
+            {sizes.map((size) => (
+              <MagnetButtons
+                key={size}
+                id={item.id}
+                size={size}
+                selectedSize={selectedSize}
+                setSelectedSize={setSelectedSize}
+                disabled={unavailableSizes.includes(size)}
+                className="pointer-events-auto"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="bottomText flex justify-center gap-1 flex-col px-4 py-2 z-10">
+        <h5 className="font-mono text-sm tracking-wider">{item.name}</h5>
+        <div className="h-full w-full md:flex items-center gap-2">
+          <h6 className="font-mono text-sm font-bold">Rs.{item.price}</h6>
+          <h6 className="text-sm text-gray-500 font-mono line-through">Rs.{item.lastPrice}</h6>
+          <div className="flex h-full w-full justify-end relative">
+            <div className="h-11 w-11 bottom-2.5 absolute z-50 bg-black flex justify-center items-center rounded-full   -right-16 group-hover:right-2 transition-all duration-500 ease-in-out">
+              <IoBagOutline
+                onClick={(e) => {
+                  e.stopPropagation();
+              
+                  const userId = localStorage.getItem("userId"); // ✅ check login
+              
+                  if (!userId) {
+                    // 🛑 not logged in
+                    alert("Please login to add items to cart!");
+                    navigate("/users/login"); // ✅ navigate to login
+                    return;
+                  }
+              
+                  setCartCount((prev) => {
+                    const updatedCount = prev + 1;
+                    localStorage.setItem(`cartCount-${userId}`, updatedCount);
+                    return updatedCount;
+                  });
+              
+                  setCartItems((prev) => {
+                    const updatedCart = [
+                      ...prev,
+                      {
+                        id: item.id,
+                        name: item.name,
+                        img: item.img,
+                        price: item.price,
+                        size: selectedSize,
+                        quantity: 1
+                      }
+                    ];
+              
+                    localStorage.setItem(`cartItems-${userId}`, JSON.stringify(updatedCart));
+                    return updatedCart;
+                  });
+                }}
+                className="text-white text-lg cursor-pointer"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Section = ({ title, data, highlight, setCartCount, setCartItems }) => (
+  <>
+    <div className='heading w-full flex justify-center items-center'>
+      <h1 className='text-[8.5vw] md:text-[3.5vw] font-semibold text-center' style={{fontFamily:'walkerBold'}}>
+        {highlight ? (
+          <>
+            <span className='font-bold font-mono uppercase ' style={{fontFamily:'walkerBold'}}>{highlight}</span>
+            <span className='text-yellow-500 tracking-wide' style={{fontFamily:'walkerBold'}}> Exclusive</span>
+          </>
+        ) : (
+          <span>{title}</span>
+        )}
+      </h1>
+    </div>
+
+    <div className="w-full flex flex-wrap justify-center gap-x-4 gap-y-6 px-3 py-6 mb-16">
+      {data.map((item, index) => (
+        <ProductCard
+          key={index}
+          item={item}
+          setCartCount={setCartCount}
+          setCartItems={setCartItems}
         />
-      )}
+      ))}
     </div>
-    <div className="bottomText flex justify-center gap-1 flex-col px-4 py-2 ">
-      <h5 className="font-mono text-base">{item.name}</h5>
-      <h6 className="font-semibold font-mono">{item.price}</h6>
-      <h6 className="text-sm text-gray-500 font-mono line-through">{item.lastPrice}</h6>
-    </div>
-  </div>
+  </>
 );
 
+const Home = ({ cartCount, setCartCount, cartItems, setCartItems, setIsCartOpen }) => {
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
-const Home = () => {
-  const Polo = [
-    {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-  ]
-  
-const tshirts = [
-  {
-    img: 'https://www.allstag.com/cdn/shop/files/IMG_2819.png?v=1744894510&width=720',
-    name: 'Polo 1',
-    price: '899.00',
-    lastPrice: '2099.00',
-  },
-  {
-    img: 'https://www.allstag.com/cdn/shop/files/IMG_3520.png?v=1745494901&width=250',
-    name: 'Polo 2',
-    price: '999.00',
-    lastPrice: '2199.00',
-  },
-  {
-    img: 'https://www.allstag.com/cdn/shop/files/IMG_2820.png?v=1744894626&width=720',
-    name: 'Polo 3',
-    price: '799.00',
-    lastPrice: '1899.00',
-  },
-  {
-    img: 'https://www.allstag.com/cdn/shop/files/IMG_2723_JPEG.jpg?v=1744803440&width=720',
-    name: 'Polo 4',
-    price: '899.00',
-    lastPrice: '2099.00',
-  },
-  {
-    img: 'https://www.allstag.com/cdn/shop/files/IMG_9031.png?v=1741188014&width=7205',
-    name: 'Polo 5',
-    price: '999.00',
-    lastPrice: '2199.00',
-  },
-];
- 
-  const BeigeOak =[
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
-    {
-      img: 'https://plus.unsplash.com/premium_photo-1672322565907-932e7554b1cc?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
+const handleSearch = (term) => {
+  setSearchTerm(term);
 
-  ]
-  const Winter = [
-        {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
+  const allProducts = [...PoloAssets, ...WinterAssets, ...essentials, ...specialPricesAssets, ...LowerSliderAssets, ...MaskAssets, ...NewArrivalsAssets];
+  const lowerTerm = term.toLowerCase().trim();
 
-  ]
-  const essentials = [
-     {
-      img: 'https://www.allstag.com/cdn/shop/files/DSC_5015_52a7dbea-7381-4447-ab20-7138a71f5971.jpg?v=1726577435&width=250',
-      name: 'Black Polo',
-      price: '899.00',
-      lastPrice: '2099.00'
-    },
+  const priceMatch = lowerTerm.match(/(under|below)\s*₹?\s*(\d+)/);
+  if (priceMatch) {
+    const priceLimit = parseInt(priceMatch[2]);
+    const results = allProducts.filter((item) => item.price <= priceLimit);
+    setFilteredProducts(results);
+    return;
+  }
 
-  ]
+  const results = allProducts.filter((item) =>
+    item.name.toLowerCase().includes(lowerTerm)
+  );
+  setFilteredProducts(results);
+};
 
+  useEffect(() => {
+    const lenis = new Lenis({ smooth: true, duration: 1.2 });
+    function raf(time) {
+      lenis.raf(time);
+      ScrollTrigger.update();
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+    return () => lenis.destroy();
+  }, []);
 
   return (
     <main className='w-full'>
-      <nav>
-        <ul className='h-12 w-full flex bg-gray-100 justify-between items-end px-4 py-1'>
-          <li className='text-2xl'><CiMenuBurger /></li>
-          <li className='h-full'><img className='h-11 w-10 object-cover' src={WrognLogo} alt="Logo" /></li>
-          <div className='flex gap-4'>
-            <li className='text-2xl'><CiSearch /></li>
-            <li className='text-2xl'><BsBag /></li>
-          </div>
-        </ul>
-      </nav>
+      <Nav cartCount={cartCount} setIsCartOpen={setIsCartOpen} handleSearch={handleSearch} />
 
-      <div className='imageSlider h-[85vh] w-full bg-blue-200'></div>
+      <BottomPanel isOpen={isPanelOpen} onClose={() => setIsPanelOpen(false)} />
 
-      {/* Shirts Polos */}
+      <div className="imageSlider w-full">
+        <video
+          className="w-full h-[80vh] md:mt-16 md:h-[85vh] object-contain"
+          muted
+          autoPlay
+          loop
+          src={finalVideo}
+        ></video>
+      </div>
+
+      {searchTerm !== '' ? (
+        filteredProducts.length > 0 ? (
+          <Section
+            title={`Search Results for "${searchTerm}"`}
+            data={filteredProducts}
+            setCartCount={setCartCount}
+            setCartItems={setCartItems}
+          />
+        ) : (
+          <p className="text-center text-gray-500 text-lg mt-12">No products found for "{searchTerm}".</p>
+        )
+      ) : (
+        <>
+          <Section
+            title="New | Arrivals"
+            data={PoloAssets}
+            setCartCount={setCartCount}
+            setCartItems={setCartItems}
+          />
+          <Section
+            title="Winter Exclusive"
+            data={WinterAssets}
+            highlight="Winter"
+            setCartCount={setCartCount}
+            setCartItems={setCartItems}
+          />
+<Section
+  title={
+    <span className='text-blue-400' style={{fontFamily:'walkerBold'}}>
+      SOFT-<span className='text-[#050505d8]' style={{ fontFamily:'walkerLight', fontWeight: 'bold' }}>Core</span>
+    </span>
+  }
+  data={essentials}
+  setCartCount={setCartCount}
+  setCartItems={setCartItems}
+/>
+        </>
+      )}
+
+      {/* 🔥 Sliders + Drags */}
       <div className='heading w-full flex justify-center items-center mb-4'>
-        <h1 className='text-[10vw] font-semibold'>Shirts | Polos</h1>
+        <h1 className='text-[7vw] md:text-[3vw] font-semibold uppercase' style={{fontFamily:'walkerBold'}}>Beige | Oak</h1>
       </div>
-      <div className="polos w-full flex gap-3 justify-between px-3 flex-wrap mb-16">
-        {Polo.map((item, index) => <ProductCard key={index} item={item} />)}
+      <div className='h-full w-full mb-16'>
+        <Drag leftImage={Aw1} rightImage={Aw2} />
       </div>
 
-      {/* Winter Exclusive */}
       <div className='heading w-full flex justify-center items-center mb-4'>
-        <h1 className='text-[10vw] font-semibold'>
-          <span className='font-bold font-mono uppercase text-[11vw]'>Winter</span>
-          <span className='text-yellow-500 tracking-wide'> Exclusive</span>
-        </h1>
+        <h1 className='text-[7vw] md:text-[3vw] font-semibold' style={{fontFamily:'walkerBold'}}>INDIGO | CORE</h1>
       </div>
-         <div className='winter w-full flex gap-3 justify-between px-4 flex-wrap mb-16'>
-           {Winter.map((item, index) => (
-             <ProductCard key={index} item={item} />
-           ))}
-         </div>
-      {/* Essentials */}
+      <div className='w-full mb-16'>
+        <Drag leftImage={blue1} rightImage={walkerMask} />
+      </div>
+
       <div className='heading w-full flex justify-center items-center mb-4'>
-        <h1 className='text-[10vw] font-semibold'>Essential's</h1>
+        <h1 className='text-[7vw] md:text-[3vw] font-semibold'style={{fontFamily:'walkerBold'}}>BLOOD | LUXE</h1>
       </div>
-      <div className="essentials w-full flex gap-3 justify-between px-4 flex-wrap mb-16">
-        {essentials.map((item,key) => (
-          <ProductCard key={key} item={item} />
-        ))}
+      <div className='w-full mb-16'>
+        <Drag
+          leftImage={red1}
+          rightImage={red2}
+        />
       </div>
+      <ProductSlider
+        data={UpperSliderAssets}
+        direction="left"
+        setCartCount={setCartCount}
+        setCartItems={setCartItems}
+      />
+      <div className='mb-6'></div>
+      <ProductSlider
+        data={LowerSliderAssets}
+        direction="right"
+        setCartCount={setCartCount}
+        setCartItems={setCartItems}
+      />
+      <Footer />
+    </main>
+  );
+};
 
-      {/* Beige Oak Infinite Scroll */}
-<div className='heading w-full flex justify-center items-center mb-4'>
-  <h1 className='text-[10vw] font-semibold uppercase'>Beige | Oak</h1>
-</div>
-  <div className='h-full w-full mb-16'>
-     <Drag
-        leftImage="https://wrogn.com/cdn/shop/files/WUTS1244S_6470d23f-1725-4690-9c5c-42555af49765.webp?v=1744697940"
-        rightImage="https://wrogn.com/cdn/shop/files/WUTS1240S_b722463f-228f-47d3-9f13-a00d58946c7b.webp?v=1744697930"  />
-  </div>
-  <div className='heading w-full flex justify-center items-center mb-4'>
-  <h1 className='text-[10vw] font-semibold'>INDIGO | BLACK</h1>
-</div>
-   <div className='w-full mb-16'>
-    <Drag 
-         leftImage="https://wrogn.com/cdn/shop/files/8905834516722.webp?v=1739864175&width=360"
-        rightImage="https://wrogn.com/cdn/shop/files/4_ae1dcf03-ded8-4a3a-815d-6f89cb0334fe.webp?v=1739864175&width=360"  />
-   </div>
-   <div className='heading w-full flex justify-center items-center mb-4'>
-      <h1 className='text-[10vw] font-semibold'>CHECK'D</h1>
-    </div>
-    <div className='w-full mb-16'>
-     <Drag 
-         leftImage="https://wrogn.com/cdn/shop/files/1_bb3a45c7-c750-4f9f-bd83-a881af6224bc.webp?v=1739288502"
-        rightImage="https://wrogn.com/cdn/shop/files/5_de9c8cd3-43c1-4825-b677-d4cec25227a2.webp?v=1739288502"  />
-    </div>
-
-
-<div className="w-full mb-8">
-  <ProductSlider data={tshirts} direction="left" />
-</div>
-
-<div className="w-full mb-16">
-  <ProductSlider data={tshirts} direction="right" />
-</div>
-  <footer className='h-[60vh] w-full bg-black rounded-t-3xl flex flex-col gap-8 px-8 py-16'>
-    <ul className='text-white flex flex-col gap-2'>
-        <li className='uppercase text-xl font-semibold mb-2'>Quik Links</li>
-        <li className='font-mono text-gray-300'>privacy policy</li>
-        <li className='font-mono text-gray-300'>Returns & Shipping Plicy</li>
-        <li className='font-mono text-gray-300'>Terms & Conditions</li>
-    </ul>
-    <ul className='text-white'>
-        <li className='uppercase text-xl font-semibold mb-2'>connect with Us</li>
-        <li className='font-mono text-gray-300'>About Us</li>
-        <li className='font-mono text-gray-300'>Contact Us</li>
-        <li className='font-mono text-gray-300'>Track Your Order</li>
-    </ul>
-   
-   <div className='text-white'>
-    <h1>₹</h1>
-   </div>
-  </footer>
- </main>
-  )
-}
-export default Home
+export default Home;

@@ -1,0 +1,17 @@
+/* Hide icon-nav on larger screens */
+@media (min-width: 768px) {
+  .icon-nav {
+    /* display: none; */
+  }
+  ul{
+  }
+  nav{
+    padding: 1vw 6vw;
+  }
+}
+
+@media (max-width: 767px) {
+  .laptop-links {
+    display: none;
+  }
+}
