@@ -8,4 +8,9 @@ export default defineConfig({
     react(),
      tailwindcss(),
   ],
+    server: {
+    // 👇 This is the fix for 404 on refresh
+    historyApiFallback: true,
+  },
+
 })
