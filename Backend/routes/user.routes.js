@@ -6,6 +6,7 @@ const { body } = require('express-validator');
 // Test route
 router.get('/', (req, res) => {
   res.send('👋 Hello from user route!');
+  console.log('hey')
 });
 
 router.post(
