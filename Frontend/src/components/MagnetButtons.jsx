@@ -27,7 +27,7 @@ const MagnetButtons = ({ size, selectedSize, setSelectedSize, disabled, id }) =>
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
       disabled={disabled}
-      className={`relative border py-3 px-5 text-xs rounded overflow-hidden transition-all group ${
+      className={`relative border cursor-pointer py-3 px-5 text-xs rounded overflow-hidden transition-all group ${
         selectedSize === size
           ? 'bg-black text-white'
           : 'bg-white text-black'
