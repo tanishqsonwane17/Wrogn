@@ -101,7 +101,7 @@ const ProductList = ({
       )}
 
       {/* Filter Toggle Button */}
-      <div className="h-full w-full px-4">
+      <div className="h-full w-full px-24">
         <button
           onClick={() => setShowFilter(prev => !prev)}
           className="px-8 text-sm py-2 border rounded-4xl flex gap-2 items-center"
