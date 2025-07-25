@@ -5,7 +5,6 @@ import Home from './screens/Home';
 import ProductDetails from './screens/ProductDetails';
 import SizeChart from './components/SizeChart';
 import WinterPage from './screens/WinterPage';
-import TShirtPage from './screens/TshirtPage';
 import Nav from './components/Nav';
 import CartDrawer from './components/CartDrawer';
 import Accessories from './screens/Accessories';
@@ -16,7 +15,7 @@ import Mask from './screens/MaskPage';
 import ContactUs from './screens/ContactUs';
 import NewArrivals from './screens/NewArrivals';
 import ShoesPage from './screens/ShoesPage';
-import Delivery from './screens/delivery';
+import Delivery from './screens/Delivery';
 
 const App = () => {
   const location = useLocation();

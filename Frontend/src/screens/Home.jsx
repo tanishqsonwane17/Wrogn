@@ -225,7 +225,7 @@ const handleSearch = (term) => {
 
       <div className="imageSlider w-full">
         <video
-          className="w-full h-[80vh] md:mt-16 md:h-[85vh] object-contain"
+          className="w-full h-[80vh] md:mt-16 md:h-[85vh] object-cover"
           muted
           autoPlay
           loop
