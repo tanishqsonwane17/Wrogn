@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
   res.send('👋 Hello from user route!');
 });
 
-// 🔐 Signup Route
 router.post(
   '/signup',
   [
