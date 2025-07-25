@@ -51,7 +51,7 @@ const Nav = ({ cartCount, setIsCartOpen, handleSearch }) => {
       )}
 
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 w-full z-50 shadow-lg bg-white z-50">
+      <nav className="fixed top-0 left-0 w-full shadow-lg bg-white z-50">
         <ul className="icon-nav h-12 md:h-10 flex justify-between items-end px-4 md:px-0 py-1 w-full">
           {/* Burger menu */}
           <li onClick={() => setShowMenu(true)} className="text-2xl cursor-pointer md:hidden">
@@ -88,11 +88,10 @@ const Nav = ({ cartCount, setIsCartOpen, handleSearch }) => {
                     className="absolute top-14 left-0 bg-white shadow-md rounded-md py-4 px-4 z-50 space-y-2 w-50"
                   >
                     <Link to={'/product/new-arrivals'}><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">New Arrivals</li></Link>
-                    <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Tanks</li>
                     <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">T-Shirt's</li>
                     <Link to={'/product/shoes'}><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shoes</li></Link>
                     <Link to={'/product/masks'}><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Mask's</li></Link>
-                    <Link to={'/product/shopAll'}><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shop All</li></Link>
+                    <Link ><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shop All</li></Link>
                   </motion.ul>
                 )}
               </AnimatePresence>

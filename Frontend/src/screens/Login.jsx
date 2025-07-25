@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../App.css'; // Custom animation styles
 
@@ -14,18 +13,14 @@ const Login = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-     const res = await axios.post('https://walker-alen.onrender.com/users/login', form);
-       localStorage.setItem("authToken", res.data.token);
-       localStorage.setItem("userId", res.data.user?._id);
-      navigate('/product/delivery');
-    } catch (err) {
-      alert('Login failed!');
-      console.error(err.response?.data || err.message);
-    }
+    // Simulate successful login (since backend not connected)
+    localStorage.setItem("authToken", "dummyToken123");
+    localStorage.setItem("userId", "dummyUserId123");
+    navigate('/product/delivery');
   };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form

@@ -39,7 +39,7 @@ const Menu = ({ isOpen, onClose }) => {
        <Link to={'/product/special-prices'}><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Special price's</li></Link>
        <Link to={'/product/Accessories'}><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Accessories</li></Link>
         <li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Tank's</li>
-        <Link to={'/product/t-shirts'}><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Tshirt's</li></Link>
+        <Link ><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Tshirt's</li></Link>
         <Link to={'/product/shoes'}><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Shoes</li></Link>
         <Link to={'/product/masks'}><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Mask's</li></Link>
         <Link to={'/product/contact-us'}><li className="text-gray-800 text-xl active:bg-gray-200 rounded-md px-2 py-2 font-bold" >Contact us</li></Link>

@@ -1,33 +1,27 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import '../App.css'; // Animation CSS
 
-       const Signup = () => {
-         const navigate = useNavigate();
-         const [form, setForm] = useState({
-           name: '',
-           email: '',
-           password: '',
-         });
-       
-         const handleChange = (e) => {
-           setForm({ ...form, [e.target.name]: e.target.value });
-         };
-       
-         const handleSubmit = async (e) => {
-           e.preventDefault();
-           try {
-       const res = await axios.post('https://walker-alen.onrender.com/users/signup', form, {
-         withCredentials: true,
-       });
+const Signup = () => {
+  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-      navigate('/product/delivery');
-      console.log(res.data);
-    } catch (err) {
-      alert('Signup failed!');
-      console.error(err.response?.data || err.message);
-    }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Simulated signup success (no backend call)
+    console.log("User created:", form);
+    localStorage.setItem("authToken", "dummyToken123");
+    localStorage.setItem("userId", "dummyUserId123");
+    navigate('/product/delivery');
   };
 
   return (
@@ -45,10 +39,10 @@ import '../App.css'; // Animation CSS
         </div>
 
         <div className="mb-4">
-            <div className='h-full w-full flex flex-col items-center'>
-          <label className="block mb-2 text-black text-xl font-semibold">Sign up</label>
-          <p className="text-xs mb-4 text-gray-600">Enter your valid email and password</p>
-            </div>
+          <div className='h-full w-full flex flex-col items-center'>
+            <label className="block mb-2 text-black text-xl font-semibold">Sign up</label>
+            <p className="text-xs mb-4 text-gray-600">Enter your valid email and password</p>
+          </div>
           <input
             placeholder="Name"
             type="text"
@@ -92,7 +86,7 @@ import '../App.css'; // Animation CSS
         </button>
 
         <div className="flex items-center h-12 text-sm justify-center mt-2">
-          <Link to="/users/login" className="hover:underline cursor-pointer ">
+          <Link to="/users/login" className="hover:underline cursor-pointer">
             Already have an account?
           </Link>
         </div>
