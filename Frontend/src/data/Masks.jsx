@@ -2,42 +2,42 @@ import React from 'react'
 import { nanoid } from 'nanoid'
  export const MaskAssets = [
     {
-      img: ' https://www.ubuy.cr/productimg/?image=aHR0cHM6Ly9pbWFnZXMtbmEuc3NsLWltYWdlcy1hbWF6b24uY29tL2ltYWdlcy9JLzUxMDJWUElNMUtMLl9TUzQwMF8uanBn.jpg',
+      img: 'https://img.tatacliq.com/images/i8/658Wx734H/MP000000015490572_658Wx734H_202211291211071.jpeg',
       name: 'Black Masks',
       price: 899.00,
       lastPrice: '2099.00',
       id: nanoid(),
     },
     {
-      img: 'https://images-na.ssl-images-amazon.com/images/I/51Abg7r%2BHnL._SS400_.jpg',
+      img: 'https://images-na.ssl-images-amazon.com/images/I/41etgIkmREL.jpg',
       name: 'Black Masks',
       price: 899.00,
       lastPrice: 2099.00,
       id: nanoid(),
     },
     {
-      img: 'https://www.thedota2store.com/wp-content/uploads/2023/12/Alan-Walker-Faded-Luminous-Pullover-Hoodie_1.webp',
+      img: 'https://www.kindpng.com/picc/m/161-1614434_alan-walker-airinum-mask-hd-png-download.png',
       name: 'Black Masks',
       price: 899.00,
       lastPrice: 2099.00,
       id: nanoid(),
     },
     {
-      img: 'https://images-na.ssl-images-amazon.com/images/I/51tb7bI6H0L._SS400_.jpg',
+      img: 'https://img.tatacliq.com/images/i8/658Wx734H/MP000000015490553_658Wx734H_202211291207251.jpeg',
       name: 'Black Masks',
       price: 899.00,
       lastPrice: 2099.00,
       id: nanoid(),
     },
     {
-      img: 'https://m.media-amazon.com/images/I/717zJ6Q805L._SL1500_.jpg',
+      img: 'https://img.joomcdn.net/0cee18ed54190b8e1718277c49dad63d70baff27_original.jpeg',
       name: 'Black Masks',
       price: 899.00,
       lastPrice: 2099.00,
       id: nanoid(),
     },
     {
-      img: '',
+      img: 'https://img.joomcdn.net/0c665c19156e77b953a79228709bd357864be592_original.jpeg',
       name: 'Black Masks',
       price: 899.00,
       lastPrice: 2099.00,

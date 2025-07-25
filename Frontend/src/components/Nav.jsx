@@ -122,29 +122,29 @@ useEffect(() => {
             <Magnet padding={50} magnetStrength={20} wrapperClassName="relative" innerClassName="transition-transform duration-300">
               <AnimatePresence>
                 {showSearch ? (
-<motion.ul
-  initial={{ opacity: 0, y: -10 }}
-  animate={{ opacity: 1, y: 0 }}
-  exit={{ opacity: 0, y: -10 }}
-  transition={{ duration: 0.2 }}
-  className="absolute top-14 left-0 bg-white shadow-md rounded-md py-4 px-4 z-50 space-y-2 w-50"
->
-  <Link to={'/product/new-arrivals'} onClick={() => setShowDropdown(false)}>
-    <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">New Arrivals</li>
-  </Link>
-  <Link to={'/product/tshirts'} onClick={() => setShowDropdown(false)}>
-    <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">T-Shirt's</li>
-  </Link>
-  <Link to={'/product/shoes'} onClick={() => setShowDropdown(false)}>
-    <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shoes</li>
-  </Link>
-  <Link to={'/product/masks'} onClick={() => setShowDropdown(false)}>
-    <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Mask's</li>
-  </Link>
-  <Link to={'/product/all'} onClick={() => setShowDropdown(false)}>
-    <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shop All</li>
-  </Link>
-</motion.ul>
+                    <motion.ul
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute top-14 left-0 bg-white shadow-md rounded-md py-4 px-4 z-50 space-y-2 w-50"
+                    >
+                      <Link to={'/product/new-arrivals'} onClick={() => setShowDropdown(false)}>
+                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">New Arrivals</li>
+                      </Link>
+                      <Link to={'/product/tshirts'} onClick={() => setShowDropdown(false)}>
+                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">T-Shirt's</li>
+                      </Link>
+                      <Link to={'/product/shoes'} onClick={() => setShowDropdown(false)}>
+                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shoes</li>
+                      </Link>
+                      <Link to={'/product/masks'} onClick={() => setShowDropdown(false)}>
+                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Mask's</li>
+                      </Link>
+                      <Link to={'/product/all'} onClick={() => setShowDropdown(false)}>
+                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shop All</li>
+                      </Link>
+                    </motion.ul>
                 ) : (
                   <li className="text-2xl cursor-pointer hidden md:block" onClick={() => setShowSearch(true)}>
                     <CiSearch className="text-[2.8vh]" />

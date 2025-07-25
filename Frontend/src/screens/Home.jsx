@@ -21,15 +21,13 @@ import Footer from "../components/Footer";
 import Nav from "../components/Nav";
 import MagnetButtons from "../components/MagnetButtons";
 gsap.registerPlugin(ScrollTrigger);
-
-const Aw1 = "/images/Walker1.png";
-const Aw2 = "/images/Walker2.png";
-const walkerMask = "/images/walker1.png";
+const Aw1 = "/images/walker2.png";
+const Aw2 = "/images/walker1.png";
+const walkerMask = "/images/walkerMask1.png";
 const blue1 = "/images/blue1.png";
 const red1 = "/images/red1.png";
 const red2 = "/images/red2.png";
 const bgvideo = "/videos/bgvideo.mp4";
-
 export const ProductCard = ({ item, setCartCount, setCartItems, small }) => {
   const cardRef = useRef(null);
 
