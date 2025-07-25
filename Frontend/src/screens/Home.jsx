@@ -201,7 +201,7 @@ const Home = ({ cartCount, setCartCount, setCartItems, setIsCartOpen }) => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProducts, setFilteredProducts] = useState([]);
-
+const previewWinter = WinterAssets.slice(0, 6); // ✅ only 6 items
   const handleSearch = (term) => {
     setSearchTerm(term);
 
@@ -280,13 +280,12 @@ const Home = ({ cartCount, setCartCount, setCartItems, setIsCartOpen }) => {
             setCartCount={setCartCount}
             setCartItems={setCartItems}
           />
-          <Section
-            title="Winter Exclusive"
-            data={WinterAssets}
-            highlight="Winter"
-            setCartCount={setCartCount}
-            setCartItems={setCartItems}
-          />
+           <Section
+             highlight="Winter"
+             data={previewWinter}
+             setCartCount={setCartCount}
+             setCartItems={setCartItems}
+           />
           <Section
             title={
               <span

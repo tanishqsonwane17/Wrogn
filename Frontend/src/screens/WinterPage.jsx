@@ -2,32 +2,32 @@ import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from '@studio-freight/lenis';
-import { WinterAssets } from '../data/Winter';
 import { ProductCard } from './Home';
-import Nav from '../components/Nav';
 import Footer from '../components/Footer';
 import { essentials } from '../data/Essential';
 import { PoloAssets } from '../data/Polo';
 import { UpperSliderAssets } from '../data/UpperSlider';
 import FilterDrawer from '../components/FilterDrawer';
 import { FaArrowRightArrowLeft } from "react-icons/fa6";
+import { WinterAssets } from '../data/Winter'; 
 import { motion } from 'framer-motion';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Animation Variants
 const headingParent = {
   hidden: {},
   visible: {
-    transition: {
-      staggerChildren: 0.06,
-    }
+    transition: { staggerChildren: 0.06 }
   }
 };
 
 const letterVariant = {
   hidden: { y: 40, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { duration: 0.4, ease: 'easeOut' } }
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.4, ease: 'easeOut' }
+  }
 };
 
 const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
@@ -35,22 +35,15 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
   const [selectedOption, setSelectedOption] = useState("");
   const [inStock, setInStock] = useState(false);
   const [outOfStock, setOutOfStock] = useState(false);
-
   const options = [
-    "Featured",
-    "Best selling",
-    "Alphabetically, A-Z",
-    "Alphabetically, Z-A",
-    "Price, low to high",
-    "Price, high to low",
-    "Date, old to new",
-    "Date, new to old"
+    "Featured", "Best selling", "Alphabetically, A-Z", "Alphabetically, Z-A",
+    "Price, low to high", "Price, high to low", "Date, old to new", "Date, new to old"
   ];
 
   const allProducts = [...essentials, ...PoloAssets, ...WinterAssets, ...UpperSliderAssets];
   const winterProducts = allProducts.filter(item => item.collection === 'winter');
 
-  let filteredProducts = winterProducts.slice();
+  let filteredProducts = [...winterProducts];
 
   if (inStock && !outOfStock) {
     filteredProducts = filteredProducts.filter(item => item.availability === "inStock");
@@ -58,6 +51,7 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
     filteredProducts = filteredProducts.filter(item => item.availability === "outOfStock");
   }
 
+  // Sorting logic
   switch (selectedOption) {
     case "Alphabetically, A-Z":
       filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
@@ -83,11 +77,11 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
 
   useEffect(() => {
     const lenis = new Lenis({ smooth: true, duration: 1.2 });
-    function raf(time) {
+    const raf = (time) => {
       lenis.raf(time);
       ScrollTrigger.update();
       requestAnimationFrame(raf);
-    }
+    };
     requestAnimationFrame(raf);
     return () => lenis.destroy();
   }, []);
@@ -99,8 +93,7 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-
-      {/* Heading - only visible when filter is closed */}
+      {/* Heading */}
       {!showFilter && (
         <div className="w-full px-3 mb-4 mt-20 flex justify-center items-center overflow-hidden">
           <motion.h1
@@ -110,8 +103,8 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
             className="text-4xl tracking-wide mt-12 md:text-[4vw] font-semibold uppercase text-gray-800 flex flex-wrap"
             style={{ fontFamily: 'walkerBold' }}
           >
-            {"Winter's".split('').map((char, index) => (
-              <motion.span key={index} variants={letterVariant}>
+            {"Winter's".split('').map((char, i) => (
+              <motion.span key={i} variants={letterVariant}>
                 {char === ' ' ? '\u00A0' : char}
               </motion.span>
             ))}
@@ -120,23 +113,22 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
       )}
 
       {/* Filter Button */}
-      <div className="h-full w-full px-24">
+      <div className="w-full px-4 md:px-24">
         <button
           onClick={() => setShowFilter(prev => !prev)}
-          className="px-8 text-sm py-2 cursor-pointer border rounded-4xl flex gap-2 items-center"
+          className="px-8 text-sm py-2 border rounded-4xl flex gap-2 items-center"
         >
-          <span className="text-xs text-gray-800">
-            <FaArrowRightArrowLeft />
-          </span>
+          <FaArrowRightArrowLeft className="text-xs text-gray-800" />
           {showFilter ? "Hide Filters" : "Show Filters"}
         </button>
       </div>
 
       {/* Filter Drawer */}
       <FilterDrawer isOpen={showFilter} onClose={() => setShowFilter(false)}>
+        {/* Sort Section */}
         <div className="mb-6">
           <h3 className="font-semibold mb-2 text-lg text-gray-800">Sort By</h3>
-          <div className="flex flex-col gap-3 font-extralight text-sm font-mono">
+          <div className="flex flex-col gap-3 text-sm font-mono">
             {options.map((option, index) => (
               <label key={index} className="flex items-center gap-3 cursor-pointer">
                 <input
@@ -153,9 +145,10 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
           </div>
         </div>
 
+        {/* Availability */}
         <div>
           <h3 className="font-semibold mb-2 text-lg text-gray-800">Availability</h3>
-          <div className="flex flex-col gap-2 textm-md font-semibold">
+          <div className="flex flex-col gap-2 text-md font-semibold">
             <label className="flex items-center gap-2">
               <input
                 type="checkbox"
@@ -179,22 +172,20 @@ const WinterPage = ({ cartCount, setCartCount, setCartItems }) => {
       </FilterDrawer>
 
       {/* Product Grid */}
-<motion.div
-className="px-3 py-6 mb-16 flex flex-wrap justify-center gap-x-4 gap-y-6 transition-all duration-300"
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.3, duration: 0.6 }}
->
-        {filteredProducts.map((item, index) => (
-          <ProductCard
-            key={index}
-            item={item}
-            setCartCount={setCartCount}
-            setCartItems={setCartItems}
-          />
-        ))}
-      </motion.div>
-
+      <motion.div
+        className="px-3 py-6 mb-16 flex flex-wrap justify-center gap-x-4 gap-y-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+      >
+         {winterProducts.map((item, index) => (
+           <ProductCard
+             key={index}
+             item={item}
+             setCartCount={setCartCount}
+             setCartItems={setCartItems}
+           />
+))}      </motion.div>
       <Footer />
     </motion.main>
   );

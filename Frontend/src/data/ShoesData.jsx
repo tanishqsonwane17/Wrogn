@@ -60,18 +60,6 @@ import React from 'react'
     type: 'Slim T-Shirt',
 
   },
-  {
-    id: nanoid(),
-    img: 'https://e7.pngegg.com/pngimages/248/433/png-clipart-skate-shoe-sneakers-van-halen-vans-boot-accessories-outdoor-shoe.png',
-    name: 'Urban Fog Hoodie for Men',
-    price: '899.00',
-    lastPrice: '2099.00',
-    color: 'Green',
-    fit: 'Slim',
-    neckline: 'Round Neck',
-    type: 'Slim T-Shirt',
-
-  }
 ];
 
 const ShoesData = () => {

@@ -6,36 +6,35 @@ import Menu from './Menu';
 import Magnet from '../components/Magnet';
 import { AnimatePresence, motion } from 'framer-motion';
 import '../css/Nav.css';
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Nav = ({ cartCount, setIsCartOpen, handleSearch }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
   const [showSearch, setShowSearch] = useState(false);
-const location = useLocation();
-
-useEffect(() => {
-  setShowDropdown(false); // close dropdown whenever route changes
-}, [location]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const location = useLocation();
+const searchRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target)
-      ) {
-        setShowDropdown(false);
-      }
-    };
+    setShowDropdown(false); // close dropdown when route changes
+  }, [location]);
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
+useEffect(() => {
+  const handleClickOutsideSearch = (e) => {
+    if (searchRef.current && !searchRef.current.contains(e.target)) {
+      setShowSearch(false);
+    }
+  };
+
+  document.addEventListener('mousedown', handleClickOutsideSearch);
+  return () => document.removeEventListener('mousedown', handleClickOutsideSearch);
+}, []);
 
   return (
     <>
+      {/* Backdrop for dropdown */}
       <AnimatePresence>
         {showDropdown && (
           <motion.div
@@ -48,6 +47,7 @@ useEffect(() => {
         )}
       </AnimatePresence>
 
+      {/* Backdrop for mobile menu */}
       {showMenu && (
         <div className="fixed inset-0 bg-black opacity-40 z-40 pointer-events-none"></div>
       )}
@@ -78,7 +78,7 @@ useEffect(() => {
                 Collections <i className="ri-arrow-drop-down-line text-xl"></i>
               </div>
 
-              {/* Dropdown Menu */}
+              {/* Dropdown */}
               <AnimatePresence>
                 {showDropdown && (
                   <motion.ul
@@ -88,63 +88,52 @@ useEffect(() => {
                     transition={{ duration: 0.2 }}
                     className="absolute top-14 left-0 bg-white shadow-md rounded-md py-4 px-4 z-50 space-y-2 w-50"
                   >
-                    <Link to={'/product/new-arrivals'}>
-                      <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">New Arrivals</li>
-                    </Link>
-                    <Link to={'/product/tshirts'}>
-                      <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">T-Shirt's</li>
-                    </Link>
-                    <Link to={'/product/shoes'}>
-                      <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shoes</li>
-                    </Link>
-                    <Link to={'/product/masks'}>
-                      <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Mask's</li>
-                    </Link>
-                    <Link to={'/product/all'}>
-                      <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shop All</li>
-                    </Link>
+                    <Link to="/product/new-arrivals"><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">New Arrivals</li></Link>
+                    <Link to="/product/shoes"><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shoes</li></Link>
+                    <Link to="/product/masks"><li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Masks</li></Link>
                   </motion.ul>
                 )}
               </AnimatePresence>
             </li>
 
-            {/* Links */}
-            <Link to={'/'}><li className="cursor-pointer text-sm">Home</li></Link>
-            <Link to={'/product/winter'}><li className="cursor-pointer text-sm">Winters</li></Link>
-            <Link to={'/product/special-prices'}><li className="cursor-pointer text-sm">Special Prices</li></Link>
-            <Link to={'/product/Accessories'}><li className="cursor-pointer text-sm">Accessories</li></Link>
-            <Link to={'/contact-us'}><li className="cursor-pointer text-sm">Contact Us</li></Link>
+            {/* Page Links */}
+            <Link to="/"><li className="cursor-pointer text-sm">Home</li></Link>
+            <Link to="/product/winter"><li className="cursor-pointer text-sm">Winters</li></Link>
+            <Link to="/product/special-prices"><li className="cursor-pointer text-sm">Special Prices</li></Link>
+            <Link to="/product/Accessories"><li className="cursor-pointer text-sm">Accessories</li></Link>
+            <Link to="/contact-us"><li className="cursor-pointer text-sm">Contact Us</li></Link>
           </ul>
 
           {/* Right Icons */}
           <div className="flex gap-4 md:gap-8 items-center">
-            {/* Search Input */}
+            {/* Search */}
             <Magnet padding={50} magnetStrength={20} wrapperClassName="relative" innerClassName="transition-transform duration-300">
               <AnimatePresence>
                 {showSearch ? (
-                    <motion.ul
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                      transition={{ duration: 0.2 }}
-                      className="absolute top-14 left-0 bg-white shadow-md rounded-md py-4 px-4 z-50 space-y-2 w-50"
-                    >
-                      <Link to={'/product/new-arrivals'} onClick={() => setShowDropdown(false)}>
-                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">New Arrivals</li>
-                      </Link>
-                      <Link to={'/product/tshirts'} onClick={() => setShowDropdown(false)}>
-                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">T-Shirt's</li>
-                      </Link>
-                      <Link to={'/product/shoes'} onClick={() => setShowDropdown(false)}>
-                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shoes</li>
-                      </Link>
-                      <Link to={'/product/masks'} onClick={() => setShowDropdown(false)}>
-                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Mask's</li>
-                      </Link>
-                      <Link to={'/product/all'} onClick={() => setShowDropdown(false)}>
-                        <li className="hover:bg-gray-100 rounded-md py-1.5 cursor-pointer">Shop All</li>
-                      </Link>
-                    </motion.ul>
+                <motion.li
+                  ref={searchRef}
+                  initial={{ width: 0, opacity: 0 }}
+                  animate={{ width: '200px', opacity: 1 }}
+                  exit={{ width: 0, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden hidden md:block"
+                >
+                  <input
+                    type="text"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        handleSearch(searchTerm);
+                        setShowSearch(false);
+                        setSearchTerm('');
+                      }
+                    }}
+                    autoFocus
+                    placeholder="Search..."
+                    className="px-4 py-1 border border-black rounded-md outline-none text-sm w-full"
+                  />
+                </motion.li>
                 ) : (
                   <li className="text-2xl cursor-pointer hidden md:block" onClick={() => setShowSearch(true)}>
                     <CiSearch className="text-[2.8vh]" />
@@ -153,14 +142,14 @@ useEffect(() => {
               </AnimatePresence>
             </Magnet>
 
-            {/* User Icon */}
+            {/* User */}
             <Magnet padding={50} magnetStrength={20} wrapperClassName="relative" innerClassName="transition-transform duration-300">
               <li className="text-2xl cursor-pointer hidden md:block">
                 <PiUserLight className="text-[2.8vh]" />
               </li>
             </Magnet>
 
-            {/* Cart Icon */}
+            {/* Cart */}
             <Magnet padding={50} magnetStrength={20} wrapperClassName="relative" innerClassName="transition-transform duration-300">
               <li
                 className="text-2xl cursor-pointer relative"

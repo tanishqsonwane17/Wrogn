@@ -5,7 +5,7 @@ export const accessoriesAssets = [
   // 🎒 Bags
   {
     id: nanoid(),
-    img: 'https://ih1.redbubble.net/image.2139432935.4297/ur,backpack_front,square,600x600.jpg',
+    img: 'https://www.symbios.pk/image/cache/data/impload/alan_walker_printed_keychain2-500x500.JPG',
     name: 'ShadowEdge Urban Backpack',
     price: '1199.00',
     lastPrice: '2299.00',
@@ -18,8 +18,8 @@ export const accessoriesAssets = [
   },
   {
     id: nanoid(),
-    img: 'https://ih1.redbubble.net/image.5520487219.3227/tb,840x840,medium-c,1,198,600,600-bg,f8f8f8.jpg',
-    name: 'Noir Luxe Tote',
+    img: 'https://m.media-amazon.com/images/I/71Yfrny-KiL._UY1000_.jpg',
+    name: 'Watch',
     price: '1299.00',
     lastPrice: '2499.00',
     collection: 'accessories',
@@ -31,8 +31,8 @@ export const accessoriesAssets = [
   },
   {
     id: nanoid(),
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVKdB6u34b7ZpjD9N1UA5fOY8QJOPWxn_pbA&s',
-    name: 'Velocity Drawstring Sack',
+    img: 'https://images-na.ssl-images-amazon.com/images/I/31gw7W0awNL.jpg',
+    name: 'cosplay',
     price: '699.00',
     lastPrice: '1499.00',
     collection: 'accessories',
@@ -46,7 +46,7 @@ export const accessoriesAssets = [
   // 💍 Jewelry
   {
     id: nanoid(),
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVm7O7vX8fI-sLQHdC-DWQLcS3j17xaZbOZQ&s',
+    img: 'https://m.media-amazon.com/images/I/51J5MlycpJL.jpg',
     name: 'Forged Steel Pendant',
     price: '499.00',
     lastPrice: '899.00',
@@ -59,7 +59,7 @@ export const accessoriesAssets = [
   },
   {
     id: nanoid(),
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRCQcUzhxyCLWT97GIRD9nS_6KjxxMg6qvDi5DltzaE1rVR1S-eQcM66hJmWNgIa-kRTk&usqp=CAU',
+    img: 'https://store.alanwalker.com/cdn/shop/products/BLUEPIN_533x.jpg?v\u003d1632486092',
     name: 'Lunar Crest Medallion',
     price: '599.00',
     lastPrice: '1099.00',
@@ -141,8 +141,8 @@ export const accessoriesAssets = [
   },
   {
     id: nanoid(),
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrB6YV2sNVtalZlwYgcrRR-6IdIVK20nudcp07bd4oOgGS3ij4SI-6CNixRs2lLZ9XvSI&usqp=CAU',
-    name: 'NeoLume Mask & Glove Set',
+    img: 'https://img.joomcdn.net/a39524bd3c79af10d2d2647a36251a2208be5a45_original.jpeg',
+    name: 'Black Bag Pack',
     price: '899.00',
     lastPrice: '1699.00',
     collection: 'accessories',
@@ -153,11 +153,10 @@ export const accessoriesAssets = [
     fit: 'Adjustable',
   },
 
-  // 🧢 Wearables
   {
     id: nanoid(),
-    img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRSKU143WwWaZrA4hcIlrVJpfeXHOv5WytgZg&s',
-    name: 'StealthCap Classic',
+    img: 'https://img.joomcdn.net/1a2216d3d238484b797732af28c9f05c8979456f_original.jpeg',
+    name: 'Pink Bag Pack',
     price: '499.00',
     lastPrice: '999.00',
     collection: 'accessories',
