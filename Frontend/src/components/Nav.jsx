@@ -4,7 +4,7 @@ import { CiMenuBurger, CiSearch } from 'react-icons/ci';
 import { PiUserLight } from "react-icons/pi";
 import Menu from './Menu';
 import Magnet from '../components/Magnet';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import '../css/Nav.css';
 import { Link } from 'react-router-dom';
 
