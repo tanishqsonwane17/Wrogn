@@ -17,17 +17,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:3000/users/login', form);
+     const res = await axios.post('https://walker-alen.onrender.com/users/login', form);
        localStorage.setItem("authToken", res.data.token);
        localStorage.setItem("userId", res.data.user?._id);
       navigate('/product/delivery');
-      console.log(res.data);
     } catch (err) {
       alert('Login failed!');
       console.error(err.response?.data || err.message);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form

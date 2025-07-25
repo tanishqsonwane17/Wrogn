@@ -18,7 +18,7 @@ import '../App.css'; // Animation CSS
          const handleSubmit = async (e) => {
            e.preventDefault();
            try {
-       const res = await axios.post(`${import.meta.env.VITE_BACKEND_BASE_URL}/users/signup`, form, {
+       const res = await axios.post('https://walker-alen.onrender.com/users/signup', form, {
          withCredentials: true,
        });
 
