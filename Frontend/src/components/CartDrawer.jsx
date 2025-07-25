@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import { IoMdClose } from "react-icons/io";
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { RiDeleteBin6Line } from "react-icons/ri";
 const CartDrawer = ({ isOpen, onClose, cartItems, setCartItems, setCartCount }) => {
   const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
   const removeFromCart = (index) => {
     const updated = cartItems.filter((_, i) => i !== index);
     setCartItems(updated);
@@ -18,7 +18,6 @@ const CartDrawer = ({ isOpen, onClose, cartItems, setCartItems, setCartCount }) 
       },
     },
   };
-
   const itemVariants = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0, transition: { duration: 0.5 } },
@@ -120,7 +119,8 @@ const CartDrawer = ({ isOpen, onClose, cartItems, setCartItems, setCartCount }) 
                   <p className='text-black font-bold font-sans'>Rs. {total}.00</p>
                 </div>
                 <div className='flex justify-center items-center h-full w-full'>
-               <button
+               <Link
+              to={'/users/login'}
               className="py-4 px-4 md:px-10 active:scale-40 bg-black text-white flex items-center cursor-pointer md:h-16 md:text-xl md:flex md:justify-center md:items-center md:w-[20vw] md:rounded-4xl rounded-lg text-xs font-bold font-mono border transition-all duration-500 ease-in-out">
                 Buy Now
                 <div className="flex gap-[1px] mx-2">
@@ -128,7 +128,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems, setCartItems, setCartCount }) 
                   <img className="h-3 w-3 rounded-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyVO9LUWF81Ov6LZR50eDNu5rNFCpkn0LwYQ&s" alt="" />
                   <img className="h-3 w-3 rounded-full object-cover" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtzgoGnOSSiaow6ecaZ7aUUVU6BcIIAW4p3Q&s" alt="" />
                 </div>
-              </button>
+              </Link>
                 </div>
               </div>
             </div>
