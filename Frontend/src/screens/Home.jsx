@@ -121,7 +121,6 @@ export const ProductCard = ({ item, setCartCount, setCartItems, small }) => {
                     navigate("/users/login"); // ✅ navigate to login
                     return;
                   }
-
                   setCartCount((prev) => {
                     const updatedCount = prev + 1;
                     localStorage.setItem(`cartCount-${userId}`, updatedCount);
@@ -232,7 +231,6 @@ const Home = ({ cartCount, setCartCount, setCartItems, setIsCartOpen }) => {
     );
     setFilteredProducts(results);
   };
-
   useEffect(() => {
     const lenis = new Lenis({ smooth: true, duration: 1.2 });
     function raf(time) {
@@ -243,7 +241,6 @@ const Home = ({ cartCount, setCartCount, setCartItems, setIsCartOpen }) => {
     requestAnimationFrame(raf);
     return () => lenis.destroy();
   }, []);
-
   return (
     <main className="w-full">
       <Nav
@@ -301,8 +298,7 @@ const Home = ({ cartCount, setCartCount, setCartItems, setIsCartOpen }) => {
                 SOFT-
                 <span
                   className="text-[#050505d8]"
-                  style={{ fontFamily: "walkerLight", fontWeight: "bold" }}
-                >
+                  style={{ fontFamily: "walkerLight", fontWeight: "bold" }}>
                   Core
                 </span>
               </span>
